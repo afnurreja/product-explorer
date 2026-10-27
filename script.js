@@ -1,8 +1,44 @@
+function delay(ms) {
+  return new Promise((resolve) => {
+    setTimeout(() => {
+      resolve("Done");
+    }, ms)
+  })
+}
+
 // Level 3
 async function getProducts() {
+  console.log("Loading products...");
+  
+  try {
+    await delay(1000);
+
+    const res = await fetch("https://dummyjson.com/products");
+
+    if (!res.ok) {
+      throw new Error("Failed to fetch data");
+    }
+
+    const data = await res.json();
+
+    for (let i = 0; i < 5; i++) {
+      console.log(`${data.products[i].id}. ${data.products[i].title}`);
+    }
+  } catch (err) {
+    console.log(err);
+  }
+}
+
+// Level 4
+async function searchProducts(searchTerm) {
+  if (!searchTerm.trim()) {
+    console.log("Please enter a product name.");
+    return;
+  }
+
   try {
     const res = await fetch(
-      "https://dummyjson.com/products?utm_source=chatgpt.com",
+      `https://dummyjson.com/products/search?q=${encodeURIComponent(searchTerm)}`,
     );
 
     if (!res.ok) {
@@ -10,18 +46,27 @@ async function getProducts() {
     }
 
     const data = await res.json();
-    
-    for(let i = 0; i < 5; i++) {
-        console.log(`${data.products[i].id}. ${data.products[i].title}`);
+    if (data.total === 0) {
+      console.log("No products found.");
+    } else {
+      console.log(`Searching for: ${searchTerm}\n`);
+
+      data.products.forEach((product, count) => {
+        console.log(`${count + 1}. ${product.title} - $${product.price}`);
+      });
     }
-  } 
-  catch (err) {
+  } catch (err) {
     console.log(err);
   }
 }
 
-console.log("Loading products...");
 getProducts();
+
+// searchProducts("phone");
+
+
+
+
 
 // Level 1
 // function getUserData() {
