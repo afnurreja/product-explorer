@@ -1,5 +1,13 @@
 const header2Input = document.querySelector(".header-2-input");
 const productContainer = document.querySelector(".products-container");
+const search = document.querySelector(".input");
+
+search.addEventListener("change", (e) => {
+  if ((e.target.value).trim()) {
+    productContainer.innerHTML = "";
+    renderData(searchProducts(e.target.value));
+  } 
+});
 
 function getCard(img, title, price, rating) {
   const card = document.createElement("div");
@@ -24,22 +32,30 @@ function getCard(img, title, price, rating) {
             </div>
           </div>
     `;
-    card.innerHTML = cardContent;
+  card.innerHTML = cardContent;
 
   return card;
 }
 
 async function renderData(data) {
   const allProducts = await data;
-  for (let i = 0; i < 30; i++) {
-    const title = allProducts.products[i].title;
-    const img = allProducts.products[i].thumbnail;
-    const price = allProducts.products[i].price;
-    const rating = allProducts.products[i].rating;
+  console.log(allProducts);
+  
+  if (allProducts.total === 0) {
+    productContainer.style.textAlign = "center";
+    productContainer.innerHTML = "<h3>No products found.</h3>";
+    return;
+  }
+
+  allProducts.products.forEach((product, count) => {
+    const img = product.thumbnail;
+    const title = product.title;
+    const price = product.price;
+    const rating = product.rating;
 
     const card = getCard(img, title, price, rating);
     productContainer.appendChild(card);
-  }
+  });
 }
 
 async function getProducts() {
@@ -63,6 +79,7 @@ async function getProducts() {
 }
 
 async function searchProducts(searchTerm) {
+  console.log(searchTerm);
   if (!searchTerm.trim()) {
     console.log("Please enter a product name.");
     return;
@@ -78,15 +95,8 @@ async function searchProducts(searchTerm) {
     }
 
     const data = await res.json();
-    if (data.total === 0) {
-      console.log("No products found.");
-    } else {
-      console.log(`Searching for: ${searchTerm}\n`);
+    return data;
 
-      data.products.forEach((product, count) => {
-        console.log(`${count + 1}. ${product.title} - $${product.price}`);
-      });
-    }
   } catch (err) {
     console.log(err);
   }
@@ -95,9 +105,6 @@ async function searchProducts(searchTerm) {
 const promiseData = getProducts();
 renderData(promiseData);
 // searchProducts("phone");
-
-
-
 
 // function delay(ms) {
 //   return new Promise((resolve) => {
