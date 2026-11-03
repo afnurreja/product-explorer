@@ -182,7 +182,7 @@ main {
     border-radius: 15px;
   }
 
-  .header-2 .search-icon {
+  .header-2 .search-icon-2 {
     height: 40px;
     width: 40px;
     background-color: #f3f5f9;
@@ -203,7 +203,7 @@ main {
     max-width: 300px;
   }
 
-  .header-2-input {
+  .none {
     display: none;
   }
 

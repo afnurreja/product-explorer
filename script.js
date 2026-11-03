@@ -1,12 +1,34 @@
-const header2Input = document.querySelector(".header-2-input");
 const productContainer = document.querySelector(".products-container");
 const search = document.querySelector(".input");
+const header2Input = document.querySelector(".header-2-input");
+const searchIcon = document.querySelector(".search-icon-2");
+const search2 = document.querySelector(".input-2");
 
-search.addEventListener("change", (e) => {
-  if ((e.target.value).trim()) {
+search.addEventListener("input", (e) => {
+  if(e.target.value === "") {
+    productContainer.innerHTML = "";
+    renderData(getProducts());
+  }
+})
+
+console.log(search2);
+searchIcon.addEventListener("click", () => {
+  header2Input.classList.toggle("none");
+  console.log("hello");
+});
+
+search2.addEventListener("change", (e) => {
+  if (e.target.value.trim()) {
     productContainer.innerHTML = "";
     renderData(searchProducts(e.target.value));
-  } 
+  }
+});
+
+search.addEventListener("change", (e) => {
+  if (e.target.value.trim()) {
+    productContainer.innerHTML = "";
+    renderData(searchProducts(e.target.value));
+  }
 });
 
 function getCard(img, title, price, rating) {
@@ -40,7 +62,7 @@ function getCard(img, title, price, rating) {
 async function renderData(data) {
   const allProducts = await data;
   console.log(allProducts);
-  
+
   if (allProducts.total === 0) {
     productContainer.style.textAlign = "center";
     productContainer.innerHTML = "<h3>No products found.</h3>";
@@ -96,7 +118,6 @@ async function searchProducts(searchTerm) {
 
     const data = await res.json();
     return data;
-
   } catch (err) {
     console.log(err);
   }
