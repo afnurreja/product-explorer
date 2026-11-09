@@ -4,32 +4,41 @@ const header2Input = document.querySelector(".header-2-input");
 const searchIcon = document.querySelector(".search-icon-2");
 const search2 = document.querySelector(".input-2");
 
-search.addEventListener("input", (e) => {
-  if(e.target.value === "") {
+let productsNotfound = false;
+
+const reload = (e) => {
+  if (e.target.value === "" && productsNotfound) {
     productContainer.innerHTML = "";
     renderData(getProducts());
+    e.target === search ? search2.value = "": search.value = "";
+    productsNotfound = false;
   }
-})
+};
 
-console.log(search2);
+const searchRender = (e, trgt) => {
+  if (e.target.value.trim()) {
+    productContainer.innerHTML = "";
+    renderData(searchProducts(e.target.value));
+    trgt.value = e.target.value;
+  }
+};
+
+search.addEventListener("input", reload);
+search2.addEventListener("input", reload);
+
 searchIcon.addEventListener("click", () => {
   header2Input.classList.toggle("none");
   console.log("hello");
 });
 
-search2.addEventListener("change", (e) => {
-  if (e.target.value.trim()) {
-    productContainer.innerHTML = "";
-    renderData(searchProducts(e.target.value));
-  }
+search.addEventListener("change", (e) => {
+  searchRender(e, search2);
 });
 
-search.addEventListener("change", (e) => {
-  if (e.target.value.trim()) {
-    productContainer.innerHTML = "";
-    renderData(searchProducts(e.target.value));
-  }
+search2.addEventListener("change", (e) => {
+  searchRender(e, search);
 });
+
 
 function getCard(img, title, price, rating) {
   const card = document.createElement("div");
@@ -66,6 +75,7 @@ async function renderData(data) {
   if (allProducts.total === 0) {
     productContainer.style.textAlign = "center";
     productContainer.innerHTML = "<h3>No products found.</h3>";
+    productsNotfound = true;
     return;
   }
 
@@ -84,8 +94,6 @@ async function getProducts() {
   console.log("Loading products...");
 
   try {
-    // await delay(1000);
-
     const res = await fetch("https://dummyjson.com/products");
 
     if (!res.ok) {
@@ -125,6 +133,7 @@ async function searchProducts(searchTerm) {
 
 const promiseData = getProducts();
 renderData(promiseData);
+
 // searchProducts("phone");
 
 // function delay(ms) {
