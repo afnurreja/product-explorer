@@ -3,6 +3,7 @@ const search = document.querySelector(".input");
 const header2Input = document.querySelector(".header-2-input");
 const searchIcon = document.querySelector(".search-icon-2");
 const search2 = document.querySelector(".input-2");
+const inStockDiv = document.querySelector(".instock-div");
 
 let productsNotfound = false;
 
@@ -10,7 +11,7 @@ const reload = (e) => {
   if (e.target.value === "" && productsNotfound) {
     productContainer.innerHTML = "";
     renderData(getProducts());
-    e.target === search ? search2.value = "": search.value = "";
+    e.target === search ? (search2.value = "") : (search.value = "");
     productsNotfound = false;
   }
 };
@@ -39,10 +40,15 @@ search2.addEventListener("change", (e) => {
   searchRender(e, search);
 });
 
-
-function getCard(img, title, price, rating) {
+function getCard(img, title, price, rating, availability) {
+  let inStockColor = "#15945b";
   const card = document.createElement("div");
   card.className = "product-card";
+
+  if(availability === "Out of Stock") {
+      inStockColor = "#7c7d7dd7";
+  }
+
   const cardContent = `
           <div class="product-image">
             <img src="${img}" alt="" />
@@ -56,9 +62,9 @@ function getCard(img, title, price, rating) {
                 <p class="rating">${rating}</p>
               </div>
               <div class="line"></div>
-              <div class="instock-div">
+              <div style="color: ${inStockColor}" class="instock-div">
                 <i class="ri-checkbox-blank-circle-fill circle"></i>
-                <p class="in-stock">In Stock</p>
+                <p class="in-stock">${availability}</p>
               </div>
             </div>
           </div>
@@ -69,25 +75,30 @@ function getCard(img, title, price, rating) {
 }
 
 async function renderData(data) {
-  const allProducts = await data;
-  console.log(allProducts);
+  try {
+    const allProducts = await data;
+    console.log(allProducts);
 
-  if (allProducts.total === 0) {
-    productContainer.style.textAlign = "center";
-    productContainer.innerHTML = "<h3>No products found.</h3>";
-    productsNotfound = true;
-    return;
+    if (allProducts.total === 0) {
+      productContainer.style.textAlign = "center";
+      productContainer.innerHTML = "<h3>No products found.</h3>";
+      productsNotfound = true;
+      return;
+    }
+
+    allProducts.products.forEach((product, count) => {
+      const img = product.thumbnail;
+      const title = product.title;
+      const price = product.price;
+      const rating = product.rating;
+      const availability = product.availabilityStatus;
+
+      const card = getCard(img, title, price, rating, availability);
+      productContainer.appendChild(card);
+    });
+  } catch (error) {
+    console.log("Error while rendering data", error);
   }
-
-  allProducts.products.forEach((product, count) => {
-    const img = product.thumbnail;
-    const title = product.title;
-    const price = product.price;
-    const rating = product.rating;
-
-    const card = getCard(img, title, price, rating);
-    productContainer.appendChild(card);
-  });
 }
 
 async function getProducts() {
