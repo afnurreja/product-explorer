@@ -3,16 +3,13 @@ const search = document.querySelector(".input");
 const header2Input = document.querySelector(".header-2-input");
 const searchIcon = document.querySelector(".search-icon-2");
 const search2 = document.querySelector(".input-2");
-const inStockDiv = document.querySelector(".instock-div");
 
-let productsNotfound = false;
 
 const reload = (e) => {
-  if (e.target.value === "" && productsNotfound) {
+  if (e.target.value === "") {
     productContainer.innerHTML = "";
     renderData(getProducts());
     e.target === search ? (search2.value = "") : (search.value = "");
-    productsNotfound = false;
   }
 };
 
@@ -29,7 +26,6 @@ search2.addEventListener("input", reload);
 
 searchIcon.addEventListener("click", () => {
   header2Input.classList.toggle("none");
-  console.log("hello");
 });
 
 search.addEventListener("change", (e) => {
@@ -51,12 +47,12 @@ function getCard(img, title, price, rating, availability) {
 
   const cardContent = `
           <div class="product-image">
-            <img src="${img}" alt="" />
+            <img src="${img}" alt="${title}" />
           </div>
           <div class="product-info">
             <h2 class="title">${title}</h2>
             <p class="price">$${price}</p>
-            <div class="bottom">
+            <div class="bottom"> 
               <div class="rating-div">
                 <i class="ri-star-fill star-icon"></i>
                 <p class="rating">${rating}</p>
@@ -77,16 +73,15 @@ function getCard(img, title, price, rating, availability) {
 async function renderData(data) {
   try {
     const allProducts = await data;
-    console.log(allProducts);
 
     if (allProducts.total === 0) {
       productContainer.style.textAlign = "center";
       productContainer.innerHTML = "<h3>No products found.</h3>";
-      productsNotfound = true;
       return;
     }
 
-    allProducts.products.forEach((product, count) => {
+    productContainer.style.textAlign = "";
+    allProducts.products.forEach((product) => {
       const img = product.thumbnail;
       const title = product.title;
       const price = product.price;
@@ -102,8 +97,6 @@ async function renderData(data) {
 }
 
 async function getProducts() {
-  console.log("Loading products...");
-
   try {
     const res = await fetch("https://dummyjson.com/products");
 
@@ -145,51 +138,6 @@ async function searchProducts(searchTerm) {
 const promiseData = getProducts();
 renderData(promiseData);
 
-// searchProducts("phone");
-
-// function delay(ms) {
-//   return new Promise((resolve) => {
-//     setTimeout(() => {
-//       resolve("Done");
-//     }, ms)
-//   })
-// }
-
-// Level 1
-// function getUserData() {
-//   return new Promise((resolve, reject) => {
-//     setTimeout(() => {
-//       resolve({
-//         id: 1,
-//         name: "Alex",
-//         course: "JavaScript",
-//       });
-//     }, 2000);
-//   });
-// }
-
-// console.log("Loading user data...");
-// getUserData()
-//   .then((res) => {
-//     console.log(res);
-//   })
-//   .catch((err) => {
-//     console.log(err);
-//   });
-
-// Level 2
-// async function loadUser() {
-//   try {
-//     const userData = await getUserData();
-//     console.log(`Name: ${userData.name}`);
-//     console.log(`Course: ${userData.course}`);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// }
-
-// loadUser();
-
 // catogary list
 // [
 // "beauty",
@@ -220,3 +168,21 @@ renderData(promiseData);
 
 // search using catogary
 // https://dummyjson.com/products/category/smartphones
+
+
+
+// Search Optimization (Learned, not implemented)
+
+// 1. Debouncing
+// - Prevents unnecessary repeated API requests while the user is typing.
+// - Waits for a specified time after the last keystroke before making a request.
+// - Uses `setTimeout()` and `clearTimeout()`.
+
+// 2. Race Condition
+// - Occurs when multiple asynchronous requests finish in a different order than they were started.
+// - An older request may overwrite the results of a newer request.
+// - Use a request ID to ensure only the latest request's results are displayed.
+
+// **Remember:**
+// - Debouncing controls how frequently requests start.
+// - Race condition handling prevents outdated results from being displayed.
