@@ -1,6 +1,5 @@
-
 /* =================================
-   1. RESET & GLOBAL
+1. RESET & GLOBAL
 ================================= */
 
 * {
@@ -10,22 +9,23 @@
 }
 
 body {
-  background-color: #f5f7fb;
+  background-color: #100f0e;
   font-family: Arial, sans-serif;
-  color: #171d2b;
+  color: #f5f2ed;
   padding: 25px;
 }
 
 main {
-  background-color: #ffffff;
+  background-color: #171614;
   min-height: 100vh;
   padding: 25px;
   border-radius: 20px;
+  border: 1px solid #292623;
 }
 
 
 /* =================================
-   2. DESKTOP HEADER
+2. DESKTOP HEADER
 ================================= */
 
 .header {
@@ -33,8 +33,8 @@ main {
   justify-content: space-between;
   align-items: center;
   padding: 15px 25px;
-  border-bottom: 1px solid #edf0f5;
-  color: #171d2b;
+  border-bottom: 1px solid #292623;
+  color: #f5f2ed;
 }
 
 .header-2 {
@@ -46,20 +46,20 @@ main {
 .search {
   display: flex;
   align-items: center;
-  background-color: #f5f7fb;
-  border: 1px solid #e8ecf3;
+  background-color: #211f1c;
+  border: 1px solid #332f2b;
   border-radius: 12px;
   padding: 5px 15px;
   transition: 0.2s ease;
 }
 
 .search:focus-within {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px #2563eb15;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px #f59e0b24;
 }
 
 .search-icon {
-  color: #737d8e;
+  color: #a89f94;
   font-size: 17px;
 }
 
@@ -70,11 +70,16 @@ main {
   padding: 10px 25px 10px 8px;
   font-size: 15px;
   width: 220px;
+  color: #f5f2ed;
+}
+
+.header input::placeholder {
+  color: #787066;
 }
 
 
 /* =================================
-   3. MOBILE HEADER
+3. MOBILE HEADER
 ================================= */
 
 .header-2 {
@@ -85,13 +90,14 @@ main {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  color: #171d2b;
+  color: #f5f2ed;
 }
 
 .header-2 .search-icon-2 {
   height: 42px;
   width: 42px;
-  background-color: #f5f7fb;
+  background-color: #211f1c;
+  color: #d6cfc5;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -101,30 +107,35 @@ main {
 }
 
 .header-2 .search-icon-2:hover {
-  background-color: #e9efff;
-  color: #2563eb;
+  background-color: #362914;
+  color: #fbbf24;
 }
 
 .header-2 input {
   width: 100%;
-  background-color: #f5f7fb;
-  border: 1px solid #e9edf3;
+  background-color: #211f1c;
+  border: 1px solid #332f2b;
   border-radius: 12px;
   padding: 12px 15px;
   margin-top: 15px;
   font-size: 14px;
+  color: #f5f2ed;
   outline: none;
   transition: 0.2s ease;
 }
 
+.header-2 input::placeholder {
+  color: #787066;
+}
+
 .header-2 input:focus {
-  border-color: #2563eb;
-  box-shadow: 0 0 0 3px #2563eb15;
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px #f59e0b24;
 }
 
 
 /* =================================
-   4. PRODUCT GRID
+4. PRODUCT GRID
 ================================= */
 
 .products-container {
@@ -137,12 +148,12 @@ main {
 
 
 /* =================================
-   5. PRODUCT CARD
+5. PRODUCT CARD
 ================================= */
 
 .product-card {
-  background-color: #ffffff;
-  border: 1px solid #e9edf3;
+  background-color: #1d1b18;
+  border: 1px solid #2e2a26;
   border-radius: 18px;
   padding: 12px;
   overflow: hidden;
@@ -153,19 +164,19 @@ main {
 
 .product-card:hover {
   transform: translateY(-5px);
-  box-shadow: 0 12px 30px rgba(20, 35, 65, 0.08);
-  border-color: #dce4f2;
+  box-shadow: 0 14px 30px rgba(0, 0, 0, 0.5);
+  border-color: #4a4239;
 }
 
 
 /* =================================
-   6. PRODUCT IMAGE
+6. PRODUCT IMAGE
 ================================= */
 
 .product-image {
   width: 100%;
   aspect-ratio: 1 / 1;
-  background-color: #f5f7fb;
+  background-color: #26231f;
   border-radius: 13px;
   overflow: hidden;
 
@@ -188,7 +199,7 @@ main {
 
 
 /* =================================
-   7. PRODUCT INFORMATION
+7. PRODUCT INFORMATION
 ================================= */
 
 .product-info {
@@ -202,7 +213,7 @@ main {
   font-size: 17px;
   line-height: 1.5;
   font-weight: 600;
-  color: #202a3b;
+  color: #ece6dd;
 
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -216,12 +227,12 @@ main {
 .price {
   font-size: 23px;
   font-weight: 700;
-  color: #2563eb;
+  color: #f59e0b;
 }
 
 
 /* =================================
-   8. BOTTOM INFORMATION
+8. BOTTOM INFORMATION
 ================================= */
 
 .product-card .bottom {
@@ -229,7 +240,7 @@ main {
   align-items: center;
   gap: 15px;
   padding-top: 10px;
-  border-top: 1px solid #edf0f5;
+  border-top: 1px solid #2c2824;
 }
 
 /* Rating */
@@ -241,12 +252,12 @@ main {
 }
 
 .star-icon {
-  color: #f5a623;
+  color: #fbbf24;
   font-size: 14px;
 }
 
 .rating {
-  color: #525e70;
+  color: #b0a69a;
   font-size: 14px;
   font-weight: 600;
 }
@@ -257,7 +268,7 @@ main {
 .line {
   width: 1px;
   height: 17px;
-  background-color: #e2e7ef;
+  background-color: #36312c;
 }
 
 
@@ -267,7 +278,7 @@ main {
   display: flex;
   align-items: center;
   gap: 6px;
-  color: #15945b;
+  color: #2dd4bf;
   font-size: 13px;
   font-weight: 600;
 }
@@ -278,7 +289,7 @@ main {
 
 
 /* =================================
-   9. TABLET RESPONSIVENESS
+9. TABLET RESPONSIVENESS
 ================================= */
 
 @media (max-width: 1000px) {
@@ -290,7 +301,7 @@ main {
 
 
 /* =================================
-   10. SMALL TABLET
+10. SMALL TABLET
 ================================= */
 
 @media (max-width: 750px) {
@@ -314,7 +325,7 @@ main {
 
 
 /* =================================
-   11. MOBILE RESPONSIVENESS
+11. MOBILE RESPONSIVENESS
 ================================= */
 
 @media (max-width: 550px) {
@@ -413,7 +424,7 @@ main {
 
 
 /* =================================
-   12. VERY SMALL MOBILE
+12. VERY SMALL MOBILE
 ================================= */
 
 @media (max-width: 360px) {
